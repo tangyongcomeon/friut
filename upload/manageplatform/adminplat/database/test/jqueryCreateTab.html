@@ -1,0 +1,70 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>动态创建表格</title>
+    <meta charset="utf-8" />
+      <script src="/upload/manageplatform/admin/assets/js/jquery-1.11.1.min.js"></script>
+      <script type="text/javascript">
+ function CreateTable(tabName,dataArray)
+  { 
+    var table=$("<table border=\"1\">");
+    table.appendTo($("#"+tabName));
+    //-----------------------生成表头信息开始----------------------------
+    var thead=$("<thead></thead>");
+    var theadTr=$("<tr></tr>");
+    var dataTabThead=dataArray['tabThead'];
+    $.each(dataTabThead,function(key1,value1){
+        var td=$("<td>"+value1.desc+"</td>");
+        td.appendTo(theadTr);
+    });
+    theadTr.appendTo(thead);
+    thead.appendTo(table);
+    //-----------------------生成表头信息结束----------------------------
+    //-----------------------生成表体信息开始----------------------------
+    var dataTabArray=dataArray['tabArray'];
+    for(var i=0;i<dataTabArray.length;i++)
+     {
+        var tr=$("<tr></tr>");
+        tr.appendTo(table);
+        $.each(dataTabArray[i],function(key1,value1){
+            var td=$("<td>"+value1+"</td>");
+            td.appendTo(tr);
+        });
+     }
+     tr.appendTo(table);
+     $("#"+tabName).append("</table>");
+     //-----------------------生成表体信息结束----------------------------
+  }
+  function tableinfo(){
+    var ss={
+            "tabThead":[
+            {"desc":"分类名称","width":"","name":"cate_name"},
+            {"desc":"商品数量","width":"","name":"cate_sum"},
+            {"desc":"数量单位","width":"","name":"cate_unit"},
+            {"desc":"操作","width":"","name":"cate_show"}
+            ],
+            "tabArray":[
+               {
+                 "id":"1","subscription_id":"123456",
+                 "cate_name":"\u98df\u54c1","cate_sum":"3",
+                 "cate_unit":"\u4e2a","cate_nav":"1","cate_show":"1",
+                 "cate_price_level":"0","cate_sort":"1"
+               }
+            ]
+            }
+    CreateTable('createtable',ss);
+  }
+</script>
+</head>
+<body>
+                     <!--提交方式    (后台)处理表单的程序 -->
+
+<input type="button" value="添加表格" onClick="tableinfo()" >
+<input type="button" value="添加行">
+<div id="createtable"></div>
+<div id="createrow"></div>
+</body>
+</html>
